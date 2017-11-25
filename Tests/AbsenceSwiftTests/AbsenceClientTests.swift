@@ -10,9 +10,20 @@ import XCTest
 
 class AbsenceClientTests: XCTestCase {
     
+    private func hawkAuth() -> (String, String) {
+        guard let hawkId = ProcessInfo.processInfo.environment["hawkId"] else {
+            fatalError()
+        }
+        guard let hawkKey = ProcessInfo.processInfo.environment["hawkKey"] else {
+            fatalError()
+        }
+        return (hawkId, hawkKey)
+    }
+    
     func testAbsencesShouldReturnAValidResult() {
+        let (hawkId, hawkKey) = hawkAuth()
         
-        let absence = AbsenceClient(id: "<your hawk id>", key: "<your hawk key>")
+        let absence = AbsenceClient(id: hawkId, key: hawkKey)
         let absences = absence.absences()
         switch absences {
         case .success(let absencesResult):
@@ -21,13 +32,6 @@ class AbsenceClientTests: XCTestCase {
             XCTFail("Failed to get absences")
         }
         
-    }
-    
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
     }
     
 }
