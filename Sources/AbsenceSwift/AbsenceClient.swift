@@ -23,14 +23,12 @@ public class AbsenceClient: QuackClient {
         super.init(url: URL(string: "https://app.absence.io")!)
     }
     
-    public func absences() -> QuackResult<AbsencesResult> {
+    public func absences(options: AbsencesOptions? = nil) -> QuackResult<AbsencesResult> {
+        let options = options ?? AbsencesOptions.defaultOptions()
         let body = [
-            "skip": 0,
-            "limit": 2,
-            "filter": [
-                "start": [ "$lte" : "2017-11-22T00:00:00.000Z" ],
-                "end": [ "$gte": "2017-11-22T00:00:00.000Z" ]
-            ],
+            "skip": options.skip,
+            "limit": options.limit,
+            "filter": options.filter?.body() ?? [:],
             "relations": [
                 "assignedToId",
                 "reasonId",

@@ -15,4 +15,10 @@ class AbsenceDateFormatter {
         return df.date(from: from)
     }
     
+    static func string(from: Date) -> String {
+        let df = DateFormatter()
+        df.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+        return df.string(from: from)
+    }
+    
 }
