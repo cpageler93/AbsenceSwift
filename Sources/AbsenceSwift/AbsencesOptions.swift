@@ -7,20 +7,25 @@
 
 import Foundation
 
-public class AbsencesOptions {
+
+public extension Absence {
     
-    let skip: Int
-    let limit: Int
-    let filter: AbsencesFilter?
-    
-    public init(skip: Int, limit: Int, filter: AbsencesFilter? = nil) {
-        self.skip = skip
-        self.limit = limit
-        self.filter = filter
+    public class Options {
+        
+        let skip: Int
+        let limit: Int
+        let filter: Filter?
+        
+        public init(skip: Int, limit: Int, filter: Filter? = nil) {
+            self.skip = skip
+            self.limit = limit
+            self.filter = filter
+        }
+        
+        public static func defaultOptions() -> Options {
+            return Options(skip: 0, limit: 50)
+        }
+        
     }
-    
-    public static func defaultOptions() -> AbsencesOptions {
-        return AbsencesOptions(skip: 0, limit: 50)
-    }
-    
+
 }

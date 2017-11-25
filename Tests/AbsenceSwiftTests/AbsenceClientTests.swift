@@ -23,14 +23,14 @@ class AbsenceClientTests: XCTestCase {
     func testAbsencesForDateShouldReturnAValidResult() {
         let (hawkId, hawkKey) = hawkAuth()
         
-        let absence = AbsenceClient(id: hawkId, key: hawkKey)
+        let absence = Absence.Client(id: hawkId, key: hawkKey)
         
-        let date = AbsenceDateFormatter.date(from: "2017-11-22T00:00:00.000Z") ?? Date()
+        let date = Absence.DateFormatter.date(from: "2017-11-22T00:00:00.000Z") ?? Date()
         let filterItems = [
-            AbsencesFilter.Item.start(.lte(date)),
-            AbsencesFilter.Item.end(.gte(date))
+            Absence.Filter.Item.start(.lte(date)),
+            Absence.Filter.Item.end(.gte(date))
         ]
-        let options = AbsencesOptions(skip: 0, limit: 50, filter: AbsencesFilter(items: filterItems))
+        let options = Absence.Options(skip: 0, limit: 50, filter: Absence.Filter(items: filterItems))
         let absences = absence.absences(options: options)
         switch absences {
         case .success(let absencesResult):
@@ -44,12 +44,12 @@ class AbsenceClientTests: XCTestCase {
     func testAbsencesForUserShouldReturnAValidResult() {
         let (hawkId, hawkKey) = hawkAuth()
         
-        let absence = AbsenceClient(id: hawkId, key: hawkKey)
+        let absence = Absence.Client(id: hawkId, key: hawkKey)
         
         let filterItems = [
-            AbsencesFilter.Item.assignedTo(.email("cp@thepeaklab.com"))
+            Absence.Filter.Item.assignedTo(.email("cp@thepeaklab.com"))
         ]
-        let options = AbsencesOptions(skip: 0, limit: 50, filter: AbsencesFilter(items: filterItems))
+        let options = Absence.Options(skip: 0, limit: 50, filter: Absence.Filter(items: filterItems))
         let absences = absence.absences(options: options)
         switch absences {
         case .success(let absencesResult):

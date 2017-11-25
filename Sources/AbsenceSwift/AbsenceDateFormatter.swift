@@ -7,18 +7,23 @@
 
 import Foundation
 
-class AbsenceDateFormatter {
+
+public extension Absence {
     
-    static func date(from: String) -> Date? {
-        let df = DateFormatter()
-        df.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
-        return df.date(from: from)
+    class DateFormatter {
+        
+        static func date(from: String) -> Date? {
+            let df = Foundation.DateFormatter()
+            df.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+            return df.date(from: from)
+        }
+        
+        static func string(from: Date) -> String {
+            let df = Foundation.DateFormatter()
+            df.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+            return df.string(from: from)
+        }
+        
     }
-    
-    static func string(from: Date) -> String {
-        let df = DateFormatter()
-        df.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
-        return df.string(from: from)
-    }
-    
+
 }
