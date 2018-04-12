@@ -1,5 +1,5 @@
 //
-//  AbsencesFilter.swift
+//  Filter.swift
 //  AbsenceSwift
 //
 //  Created by Christoph Pageler on 25.11.17.

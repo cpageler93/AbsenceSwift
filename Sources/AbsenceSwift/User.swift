@@ -1,5 +1,5 @@
 //
-//  AbsenceUser.swift
+//  User.swift
 //  AbsenceSwift
 //
 //  Created by Christoph Pageler on 22.11.17.
@@ -7,12 +7,11 @@
 
 import Foundation
 import Quack
-import SwiftyJSON
 
 
 public extension Absence {
     
-    public class User: QuackModel {
+    public class User: Quack.Model {
         
         public let id: String
         public let created: Date
@@ -21,16 +20,15 @@ public extension Absence {
         public let lastname: String
         
         public required init?(json: JSON) {
-            guard
-                let id = json["_id"].string,
+            guard let id = json["_id"].string,
                 let createdString = json["created"].string,
                 let created = DateFormatter.date(from: createdString),
                 let modifiedString = json["modified"].string,
                 let modified = DateFormatter.date(from: modifiedString),
                 let firstname = json["firstName"].string,
                 let lastname = json["lastName"].string
-                else {
-                    return nil
+            else {
+                return nil
             }
             
             self.id = id

@@ -7,12 +7,11 @@
 
 import Foundation
 import Quack
-import SwiftyJSON
 
 
 public extension Absence {
     
-    public class Entry: QuackModel {
+    public class AbsenceEntry: Quack.Model {
         
         public let id: String
         public let start: Date
@@ -23,8 +22,7 @@ public extension Absence {
         public let approver: User?
         
         public required init?(json: JSON) {
-            guard
-                let id = json["_id"].string,
+            guard let id = json["_id"].string,
                 let startString = json["start"].string,
                 let start = DateFormatter.date(from: startString),
                 let endString = json["end"].string,
@@ -33,8 +31,8 @@ public extension Absence {
                 let created = DateFormatter.date(from: createdString),
                 let modifiedString = json["modified"].string,
                 let modified = DateFormatter.date(from: modifiedString)
-                else {
-                    return nil
+            else {
+                return nil
             }
             
             self.id = id

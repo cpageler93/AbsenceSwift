@@ -9,7 +9,7 @@ let package = Package(
         .library(name: "AbsenceSwift", targets: ["AbsenceSwift"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/cpageler93/Quack", from: "1.0.2"),
+        .package(url: "https://github.com/cpageler93/Quack", from: "1.3.1"),
         .package(url: "https://github.com/cpageler93/SwiftyHawk", from: "0.1.2"),
     ],
     targets: [

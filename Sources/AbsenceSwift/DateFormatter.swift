@@ -1,5 +1,5 @@
 //
-//  AbsenceDateFormatter.swift
+//  DateFormatter.swift
 //  AbsenceSwift
 //
 //  Created by Christoph Pageler on 22.11.17.

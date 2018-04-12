@@ -1,5 +1,5 @@
 //
-//  AbsencesOptions.swift
+//  Options.swift
 //  AbsenceSwift
 //
 //  Created by Christoph Pageler on 25.11.17.

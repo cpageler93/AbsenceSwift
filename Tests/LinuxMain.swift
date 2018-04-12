@@ -2,5 +2,6 @@ import XCTest
 @testable import AbsenceSwiftTests
 
 XCTMain([
-    testCase(AbsenceSwiftTests.allTests),
+    testCase(AbsencesTests.allTests),
+    testCase(DepartmentTests.allTests),
 ])

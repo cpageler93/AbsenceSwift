@@ -1,9 +1,7 @@
 # AbsenceSwift
 Absence.io Client for Swift
 
-
-# Usage
-
+## Usage
 
 ```swift
 let absence = Absence.Client(id: "hawkId",
@@ -21,4 +19,27 @@ absence.absences(options: options) { result in
         // handle error
     }
 }
+```
+
+
+## Tests
+
+### Run tests in Xcode
+
+- Xcode > Product > Scheme > Edit Scheme > "AbsenceSwift-Package" > Run > Arguments
+- Add hawkId and hawkKey to "Environment Variables"
+- Close "Edit Schemes"
+- Run Tests in Xcode (cmd + u)
+
+### Run tests in command line
+
+```shell
+hawkId=... hawkKey=... swift test
+```
+
+
+### Run tests for linux
+
+```shell
+hawkId=... hawkKey=... ./run_docker_tests.sh
 ```
