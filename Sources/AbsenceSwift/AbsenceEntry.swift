@@ -18,8 +18,10 @@ public extension Absence {
         public let end: Date
         public let created: Date
         public let modified: Date
+        public let daysCount: Int
         public let assignedTo: User?
         public let approver: User?
+        public let reason: Reason?
         
         public required init?(json: JSON) {
             guard let id = json["_id"].string,
@@ -29,6 +31,7 @@ public extension Absence {
                 let end = DateFormatter.date(from: endString),
                 let createdString = json["created"].string,
                 let created = DateFormatter.date(from: createdString),
+                let daysCount = json["daysCount"].int,
                 let modifiedString = json["modified"].string,
                 let modified = DateFormatter.date(from: modifiedString)
             else {
@@ -40,8 +43,10 @@ public extension Absence {
             self.end = end
             self.created = created
             self.modified = modified
+            self.daysCount = daysCount
             self.assignedTo = User(json: json["assignedTo"])
             self.approver = User(json: json["approver"])
+            self.reason = Reason(json: json["reason"])
         }
         
     }

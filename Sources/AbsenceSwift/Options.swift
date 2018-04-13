@@ -22,6 +22,10 @@ public extension Absence {
             self.filter = filter
         }
         
+        public static func defaultOptions(withFilter filter: Filter) -> Options {
+            return Options(skip: 0, limit: 50, filter: filter)
+        }
+        
         public static func defaultOptions() -> Options {
             return Options(skip: 0, limit: 50)
         }

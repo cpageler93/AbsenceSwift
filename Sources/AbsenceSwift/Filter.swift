@@ -16,6 +16,8 @@ public extension Absence {
             case start(DateItem)
             case end(DateItem)
             case assignedTo(UserItem)
+            case firstname(String)
+            case lastname(String)
             
             func bodyItem() -> (String, Any) {
                 switch self {
@@ -28,6 +30,10 @@ public extension Absence {
                 case .assignedTo(let userItem):
                     let ui = userItem.bodyItem()
                     return ("assignedTo:user._id", [ui.0: ui.1])
+                case .firstname(let firstname):
+                    return ("firstName", firstname)
+                case .lastname(let lastname):
+                    return ("lastName", lastname)
                 }
             }
         }
@@ -46,10 +52,14 @@ public extension Absence {
         
         public enum UserItem {
             case email(String)
+            case firstname(String)
+            case lastname(String)
             
             func bodyItem() -> (String, String) {
                 switch self {
                 case .email(let email): return ("email", email)
+                case .firstname(let firstname): return ("firstName", firstname)
+                case .lastname(let lastname): return ("lastName", lastname)
                 }
             }
         }

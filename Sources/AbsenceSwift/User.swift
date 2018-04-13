@@ -18,6 +18,7 @@ public extension Absence {
         public let modified: Date
         public let firstname: String
         public let lastname: String
+        public let departmentId: String?
         
         public required init?(json: JSON) {
             guard let id = json["_id"].string,
@@ -36,6 +37,7 @@ public extension Absence {
             self.modified = modified
             self.firstname = firstname
             self.lastname = lastname
+            self.departmentId = json["departmentId"].string
         }
         
     }

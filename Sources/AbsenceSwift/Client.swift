@@ -29,57 +29,100 @@ public extension Absence {
             super.init(url: URL(string: "https://app.absence.io")!)
         }
         
-        public func absences(options: Options? = nil) -> Quack.Result<Result<AbsencesResult>> {
-            return respond(method: .post,
-                           path: "/api/v2/absences",
-                           body: absencesBodyFrom(options: options),
-                           headers: defaultHeader,
-                           model: Result<AbsencesResult>.self,
-                           requestModification: defaultRequestModification())
-        }
-        
-        public func absences(options: Options? = nil, completion: @escaping (Quack.Result<Result<AbsencesResult>>) -> ()) {
-            respondAsync(method: .post,
-                         path: "/api/v2/absences",
-                         body: absencesBodyFrom(options: options),
-                         headers: defaultHeader,
-                         model: Result<AbsencesResult>.self,
-                         requestModification: defaultRequestModification(),
-                         completion: completion)
-        }
-        
-        public func departments(options: Options? = nil) -> Quack.Result<Result<DepartmentsResult>> {
-            return respond(method: .post,
-                           path: "/api/v2/departments",
-                           body: defaultBodyFrom(options: options),
-                           headers: defaultHeader,
-                           model: Result<DepartmentsResult>.self,
-                           requestModification: defaultRequestModification())
-        }
-        
-        public func departments(options: Options? = nil, completion: @escaping (Quack.Result<Result<DepartmentsResult>>) -> ()) {
-            return respondAsync(method: .post,
-                                path: "/api/v2/departments",
-                                body: defaultBodyFrom(options: options),
-                                headers: defaultHeader,
-                                model: Result<DepartmentsResult>.self,
-                                requestModification: defaultRequestModification(),
-                                completion: completion)
-        }
-        
     }
 
 }
 
+// MARK: - Absences
+
+public extension Absence.Client {
+    
+    public typealias AbsenceResult = Absence.Result<Absence.AbsencesResult>
+    public typealias QuackAbsenceResult = Quack.Result<AbsenceResult>
+    
+    public func absences(options: Absence.Options? = nil) -> QuackAbsenceResult {
+        return respond(method: .post,
+                       path: "/api/v2/absences",
+                       body: absencesBodyFrom(options: options),
+                       headers: defaultHeader,
+                       model: AbsenceResult.self,
+                       requestModification: defaultRequestModification())
+    }
+    
+    public func absences(options: Absence.Options? = nil, completion: @escaping (QuackAbsenceResult) -> ()) {
+        respondAsync(method: .post,
+                     path: "/api/v2/absences",
+                     body: absencesBodyFrom(options: options),
+                     headers: defaultHeader,
+                     model: AbsenceResult.self,
+                     requestModification: defaultRequestModification(),
+                     completion: completion)
+    }
+    
+}
+
+// MARK: - Departments
+
+public extension Absence.Client {
+    
+    public typealias DepartmentResult = Absence.Result<Absence.DepartmentsResult>
+    public typealias QuackDepartmentResult = Quack.Result<DepartmentResult>
+    
+    public func departments(options: Absence.Options? = nil) -> QuackDepartmentResult {
+        return respond(method: .post,
+                       path: "/api/v2/departments",
+                       body: bodyFrom(options: options),
+                       headers: defaultHeader,
+                       model: DepartmentResult.self,
+                       requestModification: defaultRequestModification())
+    }
+    
+    public func departments(options: Absence.Options? = nil, completion: @escaping (QuackDepartmentResult) -> ()) {
+        return respondAsync(method: .post,
+                            path: "/api/v2/departments",
+                            body: bodyFrom(options: options),
+                            headers: defaultHeader,
+                            model: DepartmentResult.self,
+                            requestModification: defaultRequestModification(),
+                            completion: completion)
+    }
+    
+}
+
+// MARK: - Users
+
+public extension Absence.Client {
+    
+    public typealias UserResult = Absence.Result<Absence.UsersResult>
+    public typealias QuackUserResult = Quack.Result<UserResult>
+    
+    public func users(options: Absence.Options? = nil) -> QuackUserResult {
+        return respond(method: .post,
+                       path: "/api/v2/users",
+                       body: bodyFrom(options: options),
+                       headers: defaultHeader,
+                       model: UserResult.self,
+                       requestModification: defaultRequestModification())
+    }
+    
+    public func users(options: Absence.Options? = nil, completion: @escaping (QuackUserResult) -> ()) {
+        return respondAsync(method: .post,
+                            path: "/api/v2/users",
+                            body: bodyFrom(options: options),
+                            headers: defaultHeader,
+                            model: UserResult.self,
+                            requestModification: defaultRequestModification(),
+                            completion: completion)
+    }
+    
+}
+
+// MARK: - Private Helper
 
 fileprivate extension Absence.Client {
     
     private func absencesBodyFrom(options: Absence.Options?) -> Quack.Body {
-        let options = options ?? Absence.Options.defaultOptions()
-        return Quack.JSONBody([
-            "skip": options.skip,
-            "limit": options.limit,
-            "filter": options.filter?.body() ?? [:],
+        return bodyFrom(options: options, byAdding: [
             "relations": [
                 "assignedToId",
                 "reasonId",
@@ -88,12 +131,19 @@ fileprivate extension Absence.Client {
         ])
     }
     
-    private func defaultBodyFrom(options: Absence.Options?) -> Quack.Body {
+    private func bodyFrom(options: Absence.Options?, byAdding dict: [String: Any]? = nil) -> Quack.Body {
         let options = options ?? Absence.Options.defaultOptions()
-        return Quack.JSONBody([
+        
+        var defaultOptions: [String: Any] = [
             "skip": options.skip,
-            "limit": options.limit
-        ])
+            "limit": options.limit,
+            "filter": options.filter?.body() ?? [:]
+        ]
+        for (key, value) in dict ?? [:] {
+            defaultOptions[key] = value
+        }
+        
+        return Quack.JSONBody(defaultOptions)
     }
     
     private func defaultRequestModification() -> ((Quack.Request) -> (Quack.Request)) {
